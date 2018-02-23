@@ -1,0 +1,123 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="ly.developer.mohammedalosifi1990.muslembagv2.ui.PrayTimes.PrayTimes">
+
+    <!-- TODO: Update blank fragment layout -->
+   <LinearLayout
+       android:id="@+id/llData"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical">
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+          <ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomTextView
+              android:id="@+id/tvLocation"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="@string/hello_blank_fragment"
+              android:layout_margin="@dimen/_10sdp"
+              android:textStyle="bold"
+              android:layout_weight="1"
+              android:gravity="center"
+              android:textSize="@dimen/_15sdp"/>
+          <ImageView
+              android:id="@+id/ivReload"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:src="@drawable/ic_reload"
+              android:tint="@color/colorPrimary"
+              android:layout_gravity="center"
+              android:layout_margin="@dimen/_10sdp"/>
+      </LinearLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:layout_margin="@dimen/_5sdp"
+           android:paddingTop="@dimen/_20sdp"
+           android:paddingBottom="@dimen/_20sdp"
+           android:background="@drawable/background_with_shadow"
+           android:gravity="center">
+           <ImageView
+               android:id="@+id/ivRight"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:src="@drawable/ic_arrow_right"
+               android:tint="@color/colorPrimary"
+
+               android:layout_margin="@dimen/_5sdp"/>
+
+           <ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomTextView
+               android:id="@+id/tvDate"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_weight="1"
+               android:gravity="center"
+               android:textSize="@dimen/_15sdp"
+               android:text="الأثنيــن 8 - 2018ف"
+               android:textStyle="bold"
+               android:textColor="@color/colorPrimary"
+               />
+
+
+           <ImageView
+               android:id="@+id/ivLeft"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:src="@drawable/ic_arrow_left"
+               android:tint="@color/colorPrimary"
+               android:layout_margin="@dimen/_5sdp"/>
+
+       </LinearLayout>
+
+   </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llNotFound"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+        <ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomTextView
+            android:id="@+id/tvNotFound"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:lineSpacingExtra="@dimen/_10sdp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:text="الرجــاء ضبط بيانات الموقع الخاصة بك ... ليتمكن التطبيق من تنبيهك في أوقات الصلاة"/>
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avi"
+        android:visibility="gone"
+        style="@style/AVLoadingIndicatorView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         app:indicatorColor="@color/colorPrimary"
+        app:indicatorName="BallTrianglePathIndicator"
+
+        />
+
+        <ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomButton
+            android:id="@+id/btnGetLocation"
+            android:layout_width="match_parent"
+            android:background="@drawable/btn_green"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:paddingLeft="@dimen/_15sdp"
+            android:paddingStart="@dimen/_15sdp"
+            android:textStyle="bold"
+            android:textColor="@color/WHITE"
+            android:text="أسنكشاف الموقع"
+            android:textSize="@dimen/_18sdp"
+            android:layout_marginLeft="@dimen/_35sdp"
+            android:layout_marginRight="@dimen/_35sdp"
+            />
+    </LinearLayout>
+</LinearLayout>
