@@ -154,6 +154,11 @@ public class PrayTimes extends BaseFragment {
                         }
 
                     } catch (IOException e) {
+                        tvNotFound.setText("لم يمكن النطبيق من أيحاد بيانت الموقع الهاص بكـ ... الرجاء أعادة المحاولة ");
+                        llNotFound.setVisibility(View.VISIBLE);
+                        llData.setVisibility(View.GONE);
+                        btnGetLocation.setVisibility(View.VISIBLE);
+                        avi.setVisibility(View.GONE);
                         e.printStackTrace();
                     }
 
