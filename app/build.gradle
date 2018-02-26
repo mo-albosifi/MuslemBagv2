@@ -18,22 +18,7 @@ android {
     }
 }
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.0.0-beta1'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:0.5'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
-}
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:0.5'
-//    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-}
+
 
 def AAVersion = '4.3.1'
 dependencies {
@@ -42,15 +27,12 @@ dependencies {
 }
 
 dependencies {
-    implementation 'com.android.support:support-v4:26.+'
-}
-dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    compile 'com.android.support:appcompat-v7:26.+'
+    implementation 'com.android.support:support-compat:27.0.0'
     compile 'com.android.support:design:26.+'
     compile 'com.android.support:cardview-v7:26.+'
     compile 'com.android.support:recyclerview-v7:26.+'
@@ -67,20 +49,20 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     /*------------------------------------------------------------------------*/
 
-    compile 'org.reactivestreams:reactive-streams:1.0.0'
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'io.reactivex.rxjava2:rxjava:2.1.0'
-    /*------------------------------------------------------------------------*/
+//    compile 'org.reactivestreams:reactive-streams:1.0.0'
+//    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+//    compile 'io.reactivex.rxjava2:rxjava:2.1.0'
+//    /*------------------------------------------------------------------------*/
 
-    compile 'com.amitshekhar.android:rx2-android-networking:1.0.0'
+//    compile 'com.amitshekhar.android:rx2-android-networking:1.0.0'
 
     /*AsyncJob*/
-    compile 'com.arasthel:asyncjob-library:1.0.3'
+//    compile 'com.arasthel:asyncjob-library:1.0.3'
     /*------------------------------------------------------------------------*/
 
     /*GSON*/
-    provided 'org.glassfish:javax.annotation:10.0-b28'
-    compile 'com.google.code.gson:gson:2.8.2'
+//    provided 'org.glassfish:javax.annotation:10.0-b28'
+//    compile 'com.google.code.gson:gson:2.8.2'
     /*------------------------------------------------------------------------*/
 
     // progress
@@ -91,28 +73,25 @@ dependencies {
     compile 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
     /*------------------------------------------------------------------------*/
 
-    /*StyleAble Toast*/
-    compile 'com.muddzdev:styleabletoast:1.0.9'
-    /*------------------------------------------------------------------------*/
 
     /*Room*/
-    compile 'android.arch.lifecycle:extensions:1.0.0-rc1';
+//    compile 'android.arch.lifecycle:extensions:1.0.0-rc1';
+//    annotationProcessor 'android.arch.lifecycle:compiler:1.0.0-rc1';
     compile 'android.arch.persistence.room:runtime:1.0.0-rc1';
-    annotationProcessor 'android.arch.lifecycle:compiler:1.0.0-rc1';
     annotationProcessor 'android.arch.persistence.room:compiler:1.0.0-rc1';
     /*------------------------------------------------------------------------*/
 
     /*Dagger 2*/
-    compile 'com.google.dagger:dagger-android:2.12'
-    compile 'com.google.dagger:dagger-android-support:2.12'
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.12'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.12'
-    androidTestCompile 'com.google.code.findbugs:jsr305:3.0.1'
+//    compile 'com.google.dagger:dagger-android:2.12'
+//    compile 'com.google.dagger:dagger-android-support:2.12'
+//    annotationProcessor 'com.google.dagger:dagger-android-processor:2.12'
+//    annotationProcessor 'com.google.dagger:dagger-compiler:2.12'
+//    androidTestCompile 'com.google.code.findbugs:jsr305:3.0.1'
 
     /*------------------------------------------------------------------------*/
 
     /*Blurry*/
-    compile 'jp.wasabeef:blurry:2.1.1'
+//    compile 'jp.wasabeef:blurry:2.1.1'
 /*
 * Blurry.with(context)
 * Blurry.with(context)sdp
@@ -127,15 +106,9 @@ dependencies {
 
     /*------------------------------------------------------------------------*/
     /*swip layout*/
-    compile "com.daimajia.swipelayout:library:1.2.0@aar"
+//    compile "com.daimajia.swipelayout:library:1.2.0@aar"
     /*END swip layout*/
-    /*------------------------------------------------------------------------*/
-    /*percent layout*/
-    compile 'com.android.support:percent:26.+' // Percent Support Library
 
-    /*------------------------------------------------------------------------*/
-
-    /*------------------------------------------------------------------------*/
     /*MDToast*/
     compile 'com.valdesekamdem.library:md-toast:0.9.0'
 
@@ -148,17 +121,8 @@ dependencies {
 
 
 //    compile 'com.mapzen.android:speakerbox:1.4.1'
-
-
-
 //    compile 'io.nlopez.smartlocation:library:3.3.3'
-
 //    compile 'com.github.shivam301296:Android-CustomToast:1.0.1'
-
-
-    implementation 'com.tapadoo.android:alerter:2.0.4'
-
-
 
     compile 'com.github.halysongoncalves:pugnotification:1.8.1'
 
