@@ -89,7 +89,7 @@ public class PrayTimes extends BaseFragment {
     public void btnGetLocation() {
         btnGetLocation.setVisibility(View.GONE);
         avi.setVisibility(View.VISIBLE);
-        tvNotFound.setText("يتم الأن محاولة الحصول علي بيانات الموقع الخاصة بكـ");
+        tvNotFound.setText("جاري الحصول علي بيانات الموقع الخاصة بكـ");
         getLocationData();
     }
 
@@ -99,7 +99,7 @@ public class PrayTimes extends BaseFragment {
         avi.setVisibility(View.VISIBLE);
         llData.setVisibility(View.GONE);
         llNotFound.setVisibility(View.VISIBLE);
-        tvNotFound.setText("يتم الأن محاولة الحصول علي بيانات الموقع الخاصة بكـ");
+        tvNotFound.setText("جاري الحصول علي بيانات الموقع الخاصة بكـ");
         getLocationData();
     }
 
@@ -124,7 +124,6 @@ public class PrayTimes extends BaseFragment {
 
                             dbContext.getLocationDao().deleteAll();
                             String cityName = "";
-//                    tvDate.append(addresses.get(0).getCountryCode()+"\n");
                             tvLocation.setText("البلد : "+addresses.get(0).getCountryName()+" - ");
                             if (!addresses.get(0).getFeatureName().toLowerCase().contains("unnamed")) {
                                 tvLocation.append(" - " + addresses.get(0).getFeatureName());
@@ -145,7 +144,7 @@ public class PrayTimes extends BaseFragment {
                              llData.setVisibility(View.VISIBLE);
                              calcPrayTimes();
                          }else {
-                             tvNotFound.setText("لم يمكن النطبيق من أيحاد بيانت الموقع الهاص بكـ ... الرجاء أعادة المحاولة ");
+                             tvNotFound.setText("لم يمكن النطبيق من أيحاد بيانت الموقع الخاص بكـ ... الرجاء أعادة المحاولة ");
                              llNotFound.setVisibility(View.VISIBLE);
                              llData.setVisibility(View.GONE);
                              btnGetLocation.setVisibility(View.VISIBLE);
@@ -154,7 +153,7 @@ public class PrayTimes extends BaseFragment {
                         }
 
                     } catch (IOException e) {
-                        tvNotFound.setText("لم يمكن النطبيق من أيحاد بيانت الموقع الهاص بكـ ... الرجاء أعادة المحاولة ");
+                        tvNotFound.setText("لم يمكن النطبيق من أيحاد بيانت الموقع الخاص  بكـ ... الرجاء أعادة المحاولة ");
                         llNotFound.setVisibility(View.VISIBLE);
                         llData.setVisibility(View.GONE);
                         btnGetLocation.setVisibility(View.VISIBLE);

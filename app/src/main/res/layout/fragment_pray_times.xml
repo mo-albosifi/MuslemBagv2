@@ -10,7 +10,7 @@
    <LinearLayout
        android:id="@+id/llData"
        android:layout_width="match_parent"
-       android:layout_height="match_parent"
+       android:layout_height="wrap_content"
        android:orientation="vertical">
       <LinearLayout
           android:layout_width="match_parent"
@@ -27,7 +27,7 @@
               android:gravity="center"
               android:textSize="@dimen/_15sdp"/>
           <ImageView
-              android:id="@+id/ivReload"
+                  android:id="@+id/ivReload"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:src="@drawable/ic_reload"
@@ -80,6 +80,7 @@
 
     <LinearLayout
         android:id="@+id/llNotFound"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -101,7 +102,7 @@
         android:layout_height="wrap_content"
          app:indicatorColor="@color/colorPrimary"
         app:indicatorName="BallTrianglePathIndicator"
-
+        android:layout_marginTop="@dimen/_7sdp"
         />
 
         <ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomButton
@@ -110,12 +111,10 @@
             android:background="@drawable/btn_green"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
-            android:paddingLeft="@dimen/_15sdp"
-            android:paddingStart="@dimen/_15sdp"
             android:textStyle="bold"
             android:textColor="@color/WHITE"
             android:text="أسنكشاف الموقع"
-            android:textSize="@dimen/_18sdp"
+            android:textSize="@dimen/_15sdp"
             android:layout_marginLeft="@dimen/_35sdp"
             android:layout_marginRight="@dimen/_35sdp"
             />

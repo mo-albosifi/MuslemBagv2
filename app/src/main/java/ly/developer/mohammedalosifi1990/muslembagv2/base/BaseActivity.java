@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.tapadoo.alerter.Alerter;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
 import org.androidannotations.annotations.AfterViews;
@@ -79,14 +78,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public void makeAlerter(String title, String content) {
-        Alerter.create(this)
-                .setTitle(title)
-                .setText(content)
-                .setDuration(2)
-                .show();
-    }
-
     public void makeNotifation(String title, String message, int smallIcon, int largeIcon, PendingIntent pendingIntent) {
 
         PugNotification.with(this)
@@ -96,7 +87,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .smallIcon(smallIcon)
                 .largeIcon(largeIcon)
                 .flags(Notification.DEFAULT_ALL)
-                .button(R.drawable.alerter_ic_notifications, "فتح", pendingIntent)
+                .button(R.drawable.ic_arrow_left, "فتح", pendingIntent)
                 .color(R.color.colorPrimary)
 //    .click(cctivity, bundle)
 //    .dismiss(activity, bundle)

@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.tapadoo.alerter.Alerter;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
 import org.androidannotations.annotations.AfterViews;
@@ -82,16 +81,6 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
-    public void makeAlerter(String title, String content) {
-        Alerter.create(getActivity())
-                .setTitle(title)
-                .setText(content)
-                .setTextTypeface(Typeface.createFromAsset(getContext().getAssets(),"fonts/flat.ttf"))
-                .setBackgroundColorInt(getContext().getResources().getColor(R.color.colorPrimary))
-                .setDuration(2000)
-                .show();
-    }
-
     public void makeNotifation(String title, String message, int smallIcon, int largeIcon, PendingIntent pendingIntent) {
 
         PugNotification.with(getContext())
@@ -101,7 +90,7 @@ public abstract class BaseFragment extends Fragment {
                 .smallIcon(smallIcon)
                 .largeIcon(largeIcon)
                 .flags(Notification.DEFAULT_ALL)
-                .button(R.drawable.alerter_ic_notifications, "فتح", pendingIntent)
+                .button(R.drawable.ic_arrow_left, "فتح", pendingIntent)
                 .color(R.color.colorPrimary)
 //    .click(cctivity, bundle)
 //    .dismiss(activity, bundle)
