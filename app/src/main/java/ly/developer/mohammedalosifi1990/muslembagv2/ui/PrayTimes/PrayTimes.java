@@ -6,6 +6,7 @@ import android.location.Geocoder;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.wang.avi.AVLoadingIndicatorView;
@@ -42,8 +43,13 @@ public class PrayTimes extends BaseFragment {
 
     @ViewById
     CustomTextView tvDate, tvLocation,tvNotFound;
+
     @ViewById
-    LinearLayout llNotFound, llData;
+    CustomTextView tvPrayTime, tvPray,tvPrayTime2, tvPray2,tvPrayTime3, tvPray3,tvPrayTime4, tvPray4,tvPrayTime5, tvPray5;
+    @ViewById
+    ImageView ivPraySound,ivPraySound2,ivPraySound3,ivPraySound4,ivPraySound5;
+    @ViewById
+    LinearLayout llNotFound, llData,llPrayList;
     @ViewById
     CustomButton btnGetLocation;
     @ViewById
@@ -56,12 +62,15 @@ public class PrayTimes extends BaseFragment {
         calendar = Calendar.getInstance();
         setDate();
         LocationData locationData = dbContext.getLocationDao().getData();
-        if (locationData != null) {
+//        if (locationData != null) {
+        if (true) {
             tvLocation.setVisibility(View.VISIBLE);
-            tvLocation.setText(locationData.getContryName() + " - " + locationData.getCityName());
+//            tvLocation.setText(locationData.getContryName() + " - " + locationData.getCityName());
+            calcPrayTimes();
         } else {
             tvNotFound.setText("الرجــاء ضبط بيانات الموقع الخاصة بك ... ليتمكن التطبيق من تنبيهك في أوقات الصلاة");
-            llData.setVisibility(View.GONE);
+            tvLocation.setText("الموقع : غير معروف");
+            llPrayList.setVisibility(View.GONE);
             llNotFound.setVisibility(View.VISIBLE);
         }
     }
@@ -97,8 +106,9 @@ public class PrayTimes extends BaseFragment {
     public void ivReload(){
         btnGetLocation.setVisibility(View.GONE);
         avi.setVisibility(View.VISIBLE);
-        llData.setVisibility(View.GONE);
+
         llNotFound.setVisibility(View.VISIBLE);
+        llPrayList.setVisibility(View.GONE);
         tvNotFound.setText("جاري الحصول علي بيانات الموقع الخاصة بكـ");
         getLocationData();
     }
@@ -133,7 +143,8 @@ public class PrayTimes extends BaseFragment {
                                 tvLocation.append("المدينة : "+cityName);
                             }
                             llNotFound.setVisibility(View.GONE);
-                            llData.setVisibility(View.VISIBLE);
+                            llPrayList.setVisibility(View.VISIBLE);
+
                             dbContext.getLocationDao().insert(new LocationData(latitude, longitude, addresses.get(0).getCountryName(), cityName));
                             calcPrayTimes();
                         } else {
@@ -141,12 +152,12 @@ public class PrayTimes extends BaseFragment {
                          if (locationData!=null){
                              tvLocation.setText(""+locationData.getContryName() +" - "+"المدينة :"+locationData.getCityName());
                              llNotFound.setVisibility(View.GONE);
-                             llData.setVisibility(View.VISIBLE);
+                             llPrayList.setVisibility(View.VISIBLE);
+
                              calcPrayTimes();
                          }else {
                              tvNotFound.setText("لم يمكن النطبيق من أيحاد بيانت الموقع الخاص بكـ ... الرجاء أعادة المحاولة ");
                              llNotFound.setVisibility(View.VISIBLE);
-                             llData.setVisibility(View.GONE);
                              btnGetLocation.setVisibility(View.VISIBLE);
                              avi.setVisibility(View.GONE);
                          }
@@ -155,7 +166,7 @@ public class PrayTimes extends BaseFragment {
                     } catch (IOException e) {
                         tvNotFound.setText("لم يمكن النطبيق من أيحاد بيانت الموقع الخاص  بكـ ... الرجاء أعادة المحاولة ");
                         llNotFound.setVisibility(View.VISIBLE);
-                        llData.setVisibility(View.GONE);
+                        llPrayList.setVisibility(View.GONE);
                         btnGetLocation.setVisibility(View.VISIBLE);
                         avi.setVisibility(View.GONE);
                         e.printStackTrace();
@@ -172,15 +183,7 @@ public class PrayTimes extends BaseFragment {
 
 
 
-        TimeZone tz = TimeZone.getDefault();
-        System.out.println("TimeZone   "+tz.getDisplayName(false, TimeZone.SHORT)+" Timezon id :: " +tz.getID());
-
-//        Output:
-
-//        TimeZone GMT+09:30 Timezon id :: Australia/Darwin
-
-
-        double timezone = 2;
+        double timezone = getTimeZone();
         // Test Prayer times here
         PrayTime prayers = new PrayTime();
 
@@ -196,12 +199,18 @@ public class PrayTimes extends BaseFragment {
         ArrayList<String> prayerTimes = prayers.getPrayerTimes(calendar,latitude, longitude, timezone);
         ArrayList<String> prayerNames = prayers.getTimeNames();
 
-        for (int i = 0; i < prayerTimes.size(); i++) {
-            tvLocation.append(prayerNames.get(i) + " - " + prayerTimes.get(i));
-        }
+        tvPrayTime.setText(prayerTimes.get(0).substring(0,5)+" "+prayerNames.get(0));
+        tvPrayTime2.setText(prayerTimes.get(2).substring(0,5)+" "+prayerNames.get(2));
+        tvPrayTime3.setText(prayerTimes.get(3).substring(0,5)+" "+prayerNames.get(3));
+        tvPrayTime4.setText(prayerTimes.get(5).substring(0,5)+" "+prayerNames.get(5));
+        tvPrayTime5.setText(prayerTimes.get(6).substring(0,5)+" "+prayerNames.get(6));
 
     }
 
+    public double getTimeZone()
+    {
+        return  TimeZone.getDefault().getOffset(new Date().getTime()) / 3600000.0;
+    }
     private String getDayName(int val) {
         String dayName = "";
         switch (val) {

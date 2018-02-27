@@ -1,26 +1,38 @@
 package ly.developer.mohammedalosifi1990.muslembagv2.data.enity;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 /**
  * Created by pc on 26/02/18.
  */
 
+@Entity(tableName = "PrayEntity")
 public class PrayEntity {
+    @PrimaryKey(autoGenerate = true)
     private int id;
 
+    @ColumnInfo
     private String prayEnglishName;
-    private String prayArbicName;
+    @ColumnInfo
     private int prayHour;
+    @ColumnInfo
     private int prayMints;
+    @ColumnInfo
     private String amPm;
+    @ColumnInfo
     private boolean soundState;
+    @ColumnInfo
+    private boolean isDone;
 
-    public PrayEntity(String prayEnglishName, String prayArbicName, int prayHour, int prayMints, String amPm, boolean soundState) {
+    public PrayEntity(String prayEnglishName, int prayHour, int prayMints, String amPm, boolean soundState, boolean isDone) {
         this.prayEnglishName = prayEnglishName;
-        this.prayArbicName = prayArbicName;
-        this.prayHour = prayHour;
+         this.prayHour = prayHour;
         this.prayMints = prayMints;
         this.amPm = amPm;
         this.soundState = soundState;
+        this.isDone = isDone;
     }
 
     public int getId() {
@@ -39,13 +51,6 @@ public class PrayEntity {
         this.prayEnglishName = prayEnglishName;
     }
 
-    public String getPrayArbicName() {
-        return prayArbicName;
-    }
-
-    public void setPrayArbicName(String prayArbicName) {
-        this.prayArbicName = prayArbicName;
-    }
 
     public int getPrayHour() {
         return prayHour;
@@ -77,6 +82,14 @@ public class PrayEntity {
 
     public void setSoundState(boolean soundState) {
         this.soundState = soundState;
+    }
+
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public void setDone(boolean done) {
+        isDone = done;
     }
 }
 
