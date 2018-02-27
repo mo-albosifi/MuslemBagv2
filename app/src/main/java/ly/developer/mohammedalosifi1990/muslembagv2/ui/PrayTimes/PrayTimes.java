@@ -211,6 +211,8 @@ public class PrayTimes extends BaseFragment {
     {
         return  TimeZone.getDefault().getOffset(new Date().getTime()) / 3600000.0;
     }
+
+
     private String getDayName(int val) {
         String dayName = "";
         switch (val) {
