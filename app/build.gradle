@@ -118,7 +118,7 @@ dependencies {
 
     /*SDP layout Size*/
     compile 'com.intuit.sdp:sdp-android:1.0.5'
-
+ي
 
 //    compile 'com.mapzen.android:speakerbox:1.4.1'
 //    compile 'io.nlopez.smartlocation:library:3.3.3'
