@@ -122,9 +122,10 @@ dependencies {
 
 //    compile 'com.mapzen.android:speakerbox:1.4.1'
 //    compile 'io.nlopez.smartlocation:library:3.3.3'
-//    compile 'com.github.shivam301296:Android-CustomToast:1.0.1'
 
     compile 'com.github.halysongoncalves:pugnotification:1.8.1'
 
+//    compile 'com.github.vihtarb:tooltip:0.1.9'
+    compile 'com.github.douglasjunior:android-simple-tooltip:0.2.2'
     testCompile 'junit:junit:4.12'
 }

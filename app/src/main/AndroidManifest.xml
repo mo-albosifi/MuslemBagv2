@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".Application.AppInstanse_"
@@ -19,17 +19,24 @@
             android:name=".ui.MainActivity_"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
+        <service
+            android:name=".ui.PrayTimes.PrayService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.FirstView.FirstActivity_"
+            android:label="@string/title_activity_first"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <service
-            android:name=".ui.PrayTimes.PrayService"
-            android:enabled="true"
-            android:exported="false"></service>
     </application>
 
 </manifest>

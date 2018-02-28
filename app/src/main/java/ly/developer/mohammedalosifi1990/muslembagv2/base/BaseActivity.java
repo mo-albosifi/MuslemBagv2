@@ -2,12 +2,12 @@ package ly.developer.mohammedalosifi1990.muslembagv2.base;
 
 import android.app.Notification;
 import android.app.PendingIntent;
+import android.arch.persistence.room.Room;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -22,8 +22,10 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 
 import br.com.goncalves.pugnotification.notification.PugNotification;
+//import it.sephiroth.android.library.tooltip.Tooltip;
 import ly.developer.mohammedalosifi1990.muslembagv2.Application.AppInstanse;
 import ly.developer.mohammedalosifi1990.muslembagv2.R;
+import ly.developer.mohammedalosifi1990.muslembagv2.data.AppDataBase;
 
 /**
  * Created by Mohammed_Albosifi on 22/10/17.
@@ -35,14 +37,15 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @App
     protected AppInstanse appInstanse;
-
+    protected AppDataBase dbContext;
     @AfterViews
     protected void onCreate() {
+        dbContext = Room.databaseBuilder(this, AppDataBase.class, "AppDataBase").allowMainThreadQueries().build();
     }
 
     @Override
     protected void onDestroy() {
-
+        dbContext = null;
         appInstanse = null;
         super.onDestroy();
     }
@@ -113,6 +116,24 @@ public abstract class BaseActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
+//    public void makeToolip(View v, String message){
+//        Tooltip.make(this,
+//                new Tooltip.Builder(101)
+//                        .anchor(, Gravity.BOTTOM)
+//                        .closePolicy(new Tooltip.ClosePolicy()
+//                                .insidePolicy(true, false)
+//                                .outsidePolicy(true, false), 3000)
+//                        .activateDelay(800)
+//                        .showDelay(300)
+//                        .text(message)
+//                        .maxWidth(500)
+//                        .withArrow(true)
+//                        .withOverlay(true)
+////                        .typeface(mYourCustomFont)
+//                        .floatingAnimation(Tooltip.AnimationBuilder.DEFAULT)
+//                        .build()
+//        ).show();
+//    }
 
     public int getInt(String val) {
         return Integer.parseInt(val);
