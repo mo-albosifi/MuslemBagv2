@@ -21,6 +21,8 @@ public class AppInstanse extends Application {
     Context appContext;
 
 
+    String prayName="",praTime="";
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -48,4 +50,19 @@ public class AppInstanse extends Application {
         return utility;
     }
 
+    public String getPrayName() {
+        return prayName;
+    }
+
+    public void setPrayName(String prayName) {
+        this.prayName = prayName;
+    }
+
+    public String getPraTime() {
+        return praTime;
+    }
+
+    public void setPraTime(String praTime) {
+        this.praTime = praTime;
+    }
 }

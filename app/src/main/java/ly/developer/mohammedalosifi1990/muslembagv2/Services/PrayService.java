@@ -1,31 +1,21 @@
 package ly.developer.mohammedalosifi1990.muslembagv2.Services;
 
 import android.app.Notification;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.arch.persistence.room.Room;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
-import android.view.ContextThemeWrapper;
-import android.view.View;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EService;
 import org.androidannotations.annotations.UiThread;
-import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,11 +26,13 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import br.com.goncalves.pugnotification.notification.PugNotification;
+import ly.developer.mohammedalosifi1990.muslembagv2.Application.AppInstanse;
 import ly.developer.mohammedalosifi1990.muslembagv2.R;
-import ly.developer.mohammedalosifi1990.muslembagv2.Utils.GPSTracker;
 import ly.developer.mohammedalosifi1990.muslembagv2.Utils.PrayTime;
 import ly.developer.mohammedalosifi1990.muslembagv2.data.AppDataBase;
 import ly.developer.mohammedalosifi1990.muslembagv2.data.enity.LocationData;
+import ly.developer.mohammedalosifi1990.muslembagv2.data.enity.PrayForPlayAzan;
+import ly.developer.mohammedalosifi1990.muslembagv2.ui.PrayTimes.PlayAdanActivity_;
 
 @EService
 public class PrayService extends Service {
@@ -137,7 +129,8 @@ public class PrayService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        checkPray();
+
+         checkPray();
         super.onStartCommand(intent, flags, startId);
         return START_STICKY;
     }
@@ -206,6 +199,7 @@ public class PrayService extends Service {
                 prayerTimes = prayers.getPrayerTimes(calendar, ld.getLatitude(), ld.getLonitude(), getTimeZone());
 
 
+
                 i = 0;
                 for (i = 0; i < prayerTimes.size(); i++) {
 
@@ -213,10 +207,16 @@ public class PrayService extends Service {
                         if (getInt(prayerTimes.get(i).substring(0, 2)) == calendar.get(Calendar.HOUR)
                                 && getInt(prayerTimes.get(i).substring(3, 5)) == calendar.get(Calendar.MINUTE)
                                 && getAMPM() == getAMPMFromPrayTimes(prayerTimes.get(i))) {
+
+                            dbContext.getPrayAAzanDao().deleteAll();
+                            dbContext.getPrayAAzanDao().insert(new PrayForPlayAzan(prayerName.get(i),prayerTimes.get(i)));
+
+                            startActivity(new Intent(this, PlayAdanActivity_.class));
                             makeNotifation(prayerName.get(i), prayerTimes.get(i));
                         }
                     }
                 }
+
             }
 
 

@@ -27,15 +27,14 @@
             android:name=".ui.FirstView.FirstActivity_"
             android:label="@string/title_activity_first"
             android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
-        <activity android:name=".ui.PrayTimes.PlayAdanActivity_">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.PrayTimes.PlayAdanActivity_"/>
+
 
         <service
             android:name=".Services.PrayService_"
