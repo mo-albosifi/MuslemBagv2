@@ -30,6 +30,9 @@ dependencies {
     implementation 'com.android.support:support-v4:26.+'
 }
 dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:+'
+}
+dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'

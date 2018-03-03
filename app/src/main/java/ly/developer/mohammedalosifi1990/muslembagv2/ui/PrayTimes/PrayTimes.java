@@ -48,8 +48,8 @@ public class PrayTimes extends BaseFragment {
 
     GPSTracker gps;
     Calendar calendar;
-
-
+    PrayTime prayers;
+    ArrayList<String> prayerTimes;
     @ViewById
     CustomTextView tvDate, tvLocation, tvNotFound;
     @ViewById
@@ -75,11 +75,11 @@ public class PrayTimes extends BaseFragment {
         setDate();
         LocationData locationData = dbContext.getLocationDao().getData();
         if (locationData != null) {
-            if (locationData.getContryName() == "") {
+            if (locationData.getContryName().length()<=0) {
                 tvLocation.setVisibility(View.GONE);
             } else {
                 tvLocation.setVisibility(View.VISIBLE);
-                tvLocation.setText(locationData.getContryName() + " - " + locationData.getCityName());
+                tvLocation.setText(locationData.getContryName() + " - المدينه :" + locationData.getCityName());
             }
             calcPrayTimes();
             llNotFound.setVisibility(View.GONE);
@@ -126,22 +126,23 @@ public class PrayTimes extends BaseFragment {
         if (!utility.isServiceRunning(getContext(), PrayService_.class)) {
             getActivity().startService(new Intent(getContext(), PrayService_.class));
         }
-        getLocationData();
-    }
-
-
-    public void getLocationData() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (dbContext.getLocationDao().getData() != null) {
                     calcPrayTimes();
                 } else {
+                    llPrayList.setVisibility(View.GONE);
+                    avi.setVisibility(View.GONE);
+                    btnGetLocation.setVisibility(View.VISIBLE);
+                    llNotFound.setVisibility(View.VISIBLE);
 
                 }
             }
         }, 3000);
     }
+
+
 
     public void calcPrayTimes() {
         if (!utility.isServiceRunning(getContext(), PrayService_.class))
@@ -157,9 +158,7 @@ public class PrayTimes extends BaseFragment {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                double timezone = getTimeZone();
-                // Test Prayer times here
-                PrayTime prayers = new PrayTime();
+                prayers = new PrayTime();
 
                 prayers.setTimeFormat(prayers.Time12);
                 prayers.setCalcMethod(prayers.Jafari);
@@ -170,7 +169,7 @@ public class PrayTimes extends BaseFragment {
 
 
                 LocationData ld = dbContext.getLocationDao().getData();
-                ArrayList<String> prayerTimes = prayers.getPrayerTimes(calendar, ld.getLatitude(), ld.getLonitude(), timezone);
+                prayerTimes = prayers.getPrayerTimes(calendar, ld.getLatitude(), ld.getLonitude(), getTimeZone());
 
                 tvPrayTime.setText(prayerTimes.get(0).substring(0, 5));
                 tvPrayTime2.setText(prayerTimes.get(2).substring(0, 5));

@@ -55,6 +55,7 @@ public class PrayService extends Service {
     private AppDataBase dbContext = Room.databaseBuilder(this, AppDataBase.class, "AppDataBase").allowMainThreadQueries().build();
     LocationData ld;
     ArrayList<String> prayerTimes,prayerName;
+
     private class LocationListener implements android.location.LocationListener {
         Location mLastLocation;
 
@@ -97,7 +98,6 @@ public class PrayService extends Service {
                     dbContext.getLocationDao().update(new LocationData(latuide, longtuide, countryName, cityName));
                 }
 
-                EventBus.getDefault().postSticky(dbContext.getLocationDao().getData());
 
 
             } catch (IOException e) {
@@ -208,14 +208,15 @@ public class PrayService extends Service {
 
                 i = 0;
                 for (i = 0; i < prayerTimes.size(); i++) {
-                    if (getInt(prayerTimes.get(i).substring(0, 2)) == calendar.get(Calendar.HOUR)
-                            && getInt(prayerTimes.get(i).substring(3, 5)) == calendar.get(Calendar.MINUTE)
-                            && getAMPM() == getAMPMFromPrayTimes(prayerTimes.get(i))) {
-                        makeNotifation(prayerName.get(i), prayerTimes.get(i));
+
+                    if (!prayerTimes.get(i).toLowerCase().contains("sun")){
+                        if (getInt(prayerTimes.get(i).substring(0, 2)) == calendar.get(Calendar.HOUR)
+                                && getInt(prayerTimes.get(i).substring(3, 5)) == calendar.get(Calendar.MINUTE)
+                                && getAMPM() == getAMPMFromPrayTimes(prayerTimes.get(i))) {
+                            makeNotifation(prayerName.get(i), prayerTimes.get(i));
+                        }
                     }
                 }
-
-                
             }
 
 
