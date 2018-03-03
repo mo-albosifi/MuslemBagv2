@@ -53,7 +53,7 @@ public class PrayTimes extends BaseFragment {
     @ViewById
     CustomTextView tvDate, tvLocation, tvNotFound;
     @ViewById
-    CustomTextView tvPrayTime, tvPrayTime2, tvPrayTime3,tvPrayTime4,tvPrayTime5;
+    CustomTextView tvPrayTime, tvPrayTime2, tvPrayTime3, tvPrayTime4, tvPrayTime5;
     @ViewById
     LinearLayout llNotFound;
     @ViewById
@@ -75,11 +75,11 @@ public class PrayTimes extends BaseFragment {
         setDate();
         LocationData locationData = dbContext.getLocationDao().getData();
         if (locationData != null) {
-            if (locationData.getContryName()=="") {
+            if (locationData.getContryName() == "") {
                 tvLocation.setVisibility(View.GONE);
             } else {
                 tvLocation.setVisibility(View.VISIBLE);
-                tvLocation.setText(locationData.getContryName() +" - "+ locationData.getCityName());
+                tvLocation.setText(locationData.getContryName() + " - " + locationData.getCityName());
             }
             calcPrayTimes();
             llNotFound.setVisibility(View.GONE);
@@ -97,7 +97,7 @@ public class PrayTimes extends BaseFragment {
     public void ivLeft() {
         calendar.add(Calendar.DAY_OF_MONTH, -1);
         setDate();
-        if (llNotFound.getVisibility()==View.GONE){
+        if (llNotFound.getVisibility() == View.GONE) {
             calcPrayTimes();
         }
     }
@@ -106,7 +106,7 @@ public class PrayTimes extends BaseFragment {
     public void ivRight() {
         calendar.add(Calendar.DAY_OF_MONTH, 1);
         setDate();
-        if (llNotFound.getVisibility()==View.GONE){
+        if (llNotFound.getVisibility() == View.GONE) {
             calcPrayTimes();
         }
     }
@@ -120,15 +120,13 @@ public class PrayTimes extends BaseFragment {
 
     @Click
     public void btnGetLocation() {
-        if (utility.checkInternetConnection(getContext())){
-            btnGetLocation.setVisibility(View.GONE);
-            avi.setVisibility(View.VISIBLE);
-            tvNotFound.setText("جاري الحصول علي بيانات الموقع الخاصة بكـ..");
-            getLocationData();
-        }else {
-            showToast("الرحاء الأتصال بالشبكة","e");
+        btnGetLocation.setVisibility(View.GONE);
+        avi.setVisibility(View.VISIBLE);
+        tvNotFound.setText("جاري الحصول علي بيانات الموقع الخاصة بكـ..");
+        if (!utility.isServiceRunning(getContext(), PrayService_.class)) {
+            getActivity().startService(new Intent(getContext(), PrayService_.class));
         }
-
+        getLocationData();
     }
 
 
@@ -136,9 +134,9 @@ public class PrayTimes extends BaseFragment {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (dbContext.getLocationDao().getData()!=null){
+                if (dbContext.getLocationDao().getData() != null) {
                     calcPrayTimes();
-                }else {
+                } else {
 
                 }
             }
@@ -171,20 +169,20 @@ public class PrayTimes extends BaseFragment {
                 prayers.tune(offsets);
 
 
-                LocationData ld=dbContext.getLocationDao().getData();
-                ArrayList<String> prayerTimes = prayers.getPrayerTimes(calendar,ld.getLatitude() , ld.getLonitude(), timezone);
+                LocationData ld = dbContext.getLocationDao().getData();
+                ArrayList<String> prayerTimes = prayers.getPrayerTimes(calendar, ld.getLatitude(), ld.getLonitude(), timezone);
 
-                tvPrayTime.setText(prayerTimes.get(0).substring(0,5));
-                tvPrayTime2.setText(prayerTimes.get(2).substring(0,5));
-                tvPrayTime3.setText(prayerTimes.get(3).substring(0,5));
-                tvPrayTime4.setText(prayerTimes.get(5).substring(0,5));
-                tvPrayTime5.setText(prayerTimes.get(6).substring(0,5));
+                tvPrayTime.setText(prayerTimes.get(0).substring(0, 5));
+                tvPrayTime2.setText(prayerTimes.get(2).substring(0, 5));
+                tvPrayTime3.setText(prayerTimes.get(3).substring(0, 5));
+                tvPrayTime4.setText(prayerTimes.get(5).substring(0, 5));
+                tvPrayTime5.setText(prayerTimes.get(6).substring(0, 5));
 
 
                 pbLoad.setVisibility(View.GONE);
                 llPrayList.setVisibility(View.VISIBLE);
             }
-        },500);
+        }, 500);
     }
 
     public double getTimeZone() {

@@ -199,18 +199,23 @@ public class PrayService extends Service {
 
 
             ld = dbContext.getLocationDao().getData();
-            prayerName=prayers.getTimeNames();
+            if (ld!=null){
 
-            prayerTimes = prayers.getPrayerTimes(calendar, ld.getLatitude(), ld.getLonitude(), getTimeZone());
+                prayerName=prayers.getTimeNames();
+
+                prayerTimes = prayers.getPrayerTimes(calendar, ld.getLatitude(), ld.getLonitude(), getTimeZone());
 
 
-            i = 0;
-            for (i = 0; i < prayerTimes.size(); i++) {
-                if (getInt(prayerTimes.get(i).substring(0, 2)) == calendar.get(Calendar.HOUR)
-                        && getInt(prayerTimes.get(i).substring(3, 5)) == calendar.get(Calendar.MINUTE)
-                        && getAMPM() == getAMPMFromPrayTimes(prayerTimes.get(i))) {
-                    makeNotifation(prayerName.get(i), prayerTimes.get(i));
+                i = 0;
+                for (i = 0; i < prayerTimes.size(); i++) {
+                    if (getInt(prayerTimes.get(i).substring(0, 2)) == calendar.get(Calendar.HOUR)
+                            && getInt(prayerTimes.get(i).substring(3, 5)) == calendar.get(Calendar.MINUTE)
+                            && getAMPM() == getAMPMFromPrayTimes(prayerTimes.get(i))) {
+                        makeNotifation(prayerName.get(i), prayerTimes.get(i));
+                    }
                 }
+
+                
             }
 
 

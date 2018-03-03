@@ -1,7 +1,10 @@
 package ly.developer.mohammedalosifi1990.muslembagv2.ui.FirstView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 
+import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,7 +35,7 @@ public class FirstActivity extends BaseActivity {
     @ViewById
     CustomTextView tvNearPray;
     boolean expandState = true;// true is open
-
+    SharedPreferences prefs = null;
     @Click
     public void llQuran() {
         if (expandState) {
@@ -50,6 +53,26 @@ public class FirstActivity extends BaseActivity {
     @AfterViews
     protected void afterViews() {
         setTitle("حقيبة المسلم");
+        prefs = getSharedPreferences("com.mycompany.myAppName", MODE_PRIVATE);
+
+        if (prefs.getBoolean("firstrun", true)) {
+
+            final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+
+            alertDialog.setTitle("مرحبــا");
+
+            alertDialog.setMessage("هذا أول تشغيل لك للتطبيق .. أشكرك لأستخدامه ، وأرجو أن ينال رضاك وأستحساك .. وشكرا ");
+            alertDialog.setPositiveButton("موافق", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+             alertDialog.show();
+
+            prefs.edit().putBoolean("firstrun", false).commit();
+        }
+
 
         if (dbContext.getLocationDao().getData() == null) {
             ivNotFoundLcation.setVisibility(View.VISIBLE);
