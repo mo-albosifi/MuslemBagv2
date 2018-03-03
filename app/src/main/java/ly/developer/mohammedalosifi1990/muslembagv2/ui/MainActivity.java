@@ -16,20 +16,15 @@ import android.widget.TextView;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.greenrobot.eventbus.EventBus;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 
-import ly.developer.mohammedalosifi1990.muslembagv2.Utils.GPSTracker;
 import ly.developer.mohammedalosifi1990.muslembagv2.R;
-import ly.developer.mohammedalosifi1990.muslembagv2.ui.PrayTimes.PrayTimes_;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    GPSTracker gps;
 
 
     @ViewById
@@ -63,6 +58,7 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+             EventBus.getDefault().postSticky("");
         }
     }
 

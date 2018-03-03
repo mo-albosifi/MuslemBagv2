@@ -25,6 +25,7 @@ import org.androidannotations.annotations.UiThread;
 import br.com.goncalves.pugnotification.notification.PugNotification;
 import ly.developer.mohammedalosifi1990.muslembagv2.Application.AppInstanse;
 import ly.developer.mohammedalosifi1990.muslembagv2.R;
+import ly.developer.mohammedalosifi1990.muslembagv2.Utils.Utility;
 import ly.developer.mohammedalosifi1990.muslembagv2.data.AppDataBase;
 
 /**
@@ -34,11 +35,13 @@ import ly.developer.mohammedalosifi1990.muslembagv2.data.AppDataBase;
 public abstract class BaseFragment extends Fragment {
 
     protected AppDataBase dbContext;
+    protected Utility utility;
     @App
     protected AppInstanse appInstanse;
 
     @AfterViews
     protected void onCreate() {
+        utility=new Utility();
         dbContext = Room.databaseBuilder(getContext(), AppDataBase.class, "AppDataBase").allowMainThreadQueries().build();
     }
 
@@ -47,6 +50,7 @@ public abstract class BaseFragment extends Fragment {
     public void onDetach() {
         dbContext = null;
         appInstanse = null;
+        utility=null;
         super.onDetach();
     }
 

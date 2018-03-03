@@ -27,6 +27,9 @@ public class LocationData {
     @ColumnInfo
     private String cityName;
 
+    public LocationData() {
+    }
+
     public LocationData(double latitude, double lonitude, String contryName, String cityName) {
         this.latitude = latitude;
         this.lonitude = lonitude;

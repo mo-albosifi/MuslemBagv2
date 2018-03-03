@@ -20,9 +20,11 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
+import org.greenrobot.eventbus.EventBus;
 
 import br.com.goncalves.pugnotification.notification.PugNotification;
 //import it.sephiroth.android.library.tooltip.Tooltip;
+import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip;
 import ly.developer.mohammedalosifi1990.muslembagv2.Application.AppInstanse;
 import ly.developer.mohammedalosifi1990.muslembagv2.R;
 import ly.developer.mohammedalosifi1990.muslembagv2.data.AppDataBase;
@@ -116,24 +118,19 @@ public abstract class BaseActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-//    public void makeToolip(View v, String message){
-//        Tooltip.make(this,
-//                new Tooltip.Builder(101)
-//                        .anchor(, Gravity.BOTTOM)
-//                        .closePolicy(new Tooltip.ClosePolicy()
-//                                .insidePolicy(true, false)
-//                                .outsidePolicy(true, false), 3000)
-//                        .activateDelay(800)
-//                        .showDelay(300)
-//                        .text(message)
-//                        .maxWidth(500)
-//                        .withArrow(true)
-//                        .withOverlay(true)
-////                        .typeface(mYourCustomFont)
-//                        .floatingAnimation(Tooltip.AnimationBuilder.DEFAULT)
-//                        .build()
-//        ).show();
-//    }
+    public void makeToolip(View v, String message){
+
+        new SimpleTooltip.Builder(this)
+                .anchorView(v)
+                .text(message)
+                .gravity(Gravity.BOTTOM)
+                .animated(true)
+                .transparentOverlay(false)
+                .build()
+
+                .show();
+
+    }
 
     public int getInt(String val) {
         return Integer.parseInt(val);

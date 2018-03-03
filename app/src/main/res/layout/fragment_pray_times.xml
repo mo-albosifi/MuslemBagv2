@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+
     tools:context="ly.developer.mohammedalosifi1990.muslembagv2.ui.PrayTimes.PrayTimes">
 
     <ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomTextView
@@ -68,13 +69,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical">
+
 
 
 
         <LinearLayout
             android:id="@+id/llNotFound"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center|top"
@@ -118,91 +120,393 @@
                 android:layout_marginRight="@dimen/_35sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/btn_green"
-                android:text="أسنكشاف الموقع"
+                android:text="بـدء أسنكشاف الموقع"
                 android:textColor="@color/WHITE"
                 android:textSize="@dimen/_15sdp"
                 android:textStyle="bold" />
         </LinearLayout>
+        <ProgressBar
+            android:id="@+id/pbLoad"
+            android:visibility="gone"
 
-        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ScrollView
             android:id="@+id/llPrayList"
+            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/_2sdp"
-            android:padding="@dimen/_5sdp"
-            android:orientation="vertical">
-
-            <android.support.v7.widget.CardView
+            android:layout_height="match_parent">
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="2dp"
-                app:cardElevation="@dimen/_2sdp">
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_2sdp"
+                android:padding="@dimen/_5sdp"
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/llPrayTimes"
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:clickable="true"
-                    android:padding="@dimen/_12sdp">
-
-                    <ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="06:25"
-                        android:textSize="@dimen/_20sdp"
-                        android:textColor="@color/PRIMARYDARK"
-                        android:textStyle="bold"/>
-                    <View
-                        android:layout_width="0.2dp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginBottom="@dimen/_10sdp"
-                        android:layout_marginRight="@dimen/_15sdp"
-                        android:layout_marginLeft="@dimen/_15sdp"
-                        android:layout_height="match_parent"
-                        android:background="@color/BLUE_GRAY"/>
+                    app:cardCornerRadius="2dp"
+                    app:cardElevation="@dimen/_2sdp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_5sdp"
-                        android:layout_marginRight="@dimen/_5sdp"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:orientation="vertical">
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:clickable="true"
+                        android:padding="@dimen/_5sdp">
 
                         <ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomTextView
+                            android:id="@+id/tvPrayTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:text="صــلاة "
-                             android:textColor="@color/PRIMARY"
-                            android:textSize="@dimen/_20sdp"
-                            android:textStyle="bold" />
+                            android:text="06:25"
+                            android:textSize="@dimen/_15sdp"
+                            android:textColor="@color/PRIMARYDARK"
+                            android:textStyle="bold"/>
+                        <View
+                            android:layout_width="0.2dp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:layout_marginRight="@dimen/_15sdp"
+                            android:layout_marginLeft="@dimen/_15sdp"
+                            android:layout_height="match_parent"
+                            android:background="@color/BLUE_GRAY"/>
 
-                        <ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomTextView
-                            android:id="@+id/tvNearPray"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:orientation="vertical">
+
+                            <ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomTextView
+                                android:id="@+id/tvPrayName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:text="صــلاة الفجـر "
+                                android:textColor="@color/PRIMARY"
+                                android:textSize="@dimen/_15sdp"
+                                android:textStyle="bold" />
+
+                            <ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomTextView
+                                android:id="@+id/tvPrayNear"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:visibility="gone"
+                                android:text=" أقرب صلاة : العصر - تبقي 01:05"
+                                android:textSize="@dimen/_12sdp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/ivPraySound"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:visibility="gone"
-                            android:text=" أقرب صلاة : العصر - تبقي 01:05"
-                            android:textSize="@dimen/_12sdp"
-                            android:textStyle="bold" />
+                            android:padding="@dimen/_10sdp"
+                            android:src="@drawable/ic_volume_up"
+                            android:tint="@color/PRIMARY2" />
+
                     </LinearLayout>
+                </android.support.v7.widget.CardView>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="2dp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    app:cardElevation="@dimen/_2sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/_10sdp"
-                        android:src="@drawable/ic_volume_up"
-                        android:tint="@color/PRIMARY2" />
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:clickable="true"
+                        android:padding="@dimen/_5sdp">
 
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
+                        <ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomTextView
+                            android:id="@+id/tvPrayTime2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="06:25"
+                            android:textSize="@dimen/_15sdp"
+                            android:textColor="@color/PRIMARYDARK"
+                            android:textStyle="bold"/>
+                        <View
+                            android:layout_width="0.2dp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:layout_marginRight="@dimen/_15sdp"
+                            android:layout_marginLeft="@dimen/_15sdp"
+                            android:layout_height="match_parent"
+                            android:background="@color/BLUE_GRAY"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:orientation="vertical">
+
+                            <ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomTextView
+                                android:id="@+id/tvPrayName2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:text="صــلاة الظهـر "
+                                android:textColor="@color/PRIMARY"
+                                android:textSize="@dimen/_15sdp"
+                                android:textStyle="bold" />
+
+                            <ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomTextView
+                                android:id="@+id/tvPrayNear2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:visibility="gone"
+                                android:text=" أقرب صلاة : العصر - تبقي 01:05"
+                                android:textSize="@dimen/_12sdp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/ivPraySound2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_10sdp"
+                            android:src="@drawable/ic_volume_up"
+                            android:tint="@color/PRIMARY2" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="2dp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    app:cardElevation="@dimen/_2sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:clickable="true"
+                        android:padding="@dimen/_5sdp">
+
+                        <ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomTextView
+                            android:id="@+id/tvPrayTime3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="06:25"
+                            android:textSize="@dimen/_15sdp"
+                            android:textColor="@color/PRIMARYDARK"
+                            android:textStyle="bold"/>
+                        <View
+                            android:layout_width="0.2dp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:layout_marginRight="@dimen/_15sdp"
+                            android:layout_marginLeft="@dimen/_15sdp"
+                            android:layout_height="match_parent"
+                            android:background="@color/BLUE_GRAY"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:orientation="vertical">
+
+                            <ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomTextView
+                                android:id="@+id/tvPrayName3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:text="صــلاة  العصر "
+                                android:textColor="@color/PRIMARY"
+                                android:textSize="@dimen/_15sdp"
+                                android:textStyle="bold" />
+
+                            <ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomTextView
+                                android:id="@+id/tvPrayNear3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:visibility="gone"
+                                android:text=" أقرب صلاة : العصر - تبقي 01:05"
+                                android:textSize="@dimen/_12sdp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/ivPraySound3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_10sdp"
+                            android:src="@drawable/ic_volume_up"
+                            android:tint="@color/PRIMARY2" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="2dp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    app:cardElevation="@dimen/_2sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:clickable="true"
+                        android:padding="@dimen/_5sdp">
+
+                        <ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomTextView
+                            android:id="@+id/tvPrayTime4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="06:25"
+                            android:textSize="@dimen/_15sdp"
+                            android:textColor="@color/PRIMARYDARK"
+                            android:textStyle="bold"/>
+                        <View
+                            android:layout_width="0.2dp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:layout_marginRight="@dimen/_15sdp"
+                            android:layout_marginLeft="@dimen/_15sdp"
+                            android:layout_height="match_parent"
+                            android:background="@color/BLUE_GRAY"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:orientation="vertical">
+
+                            <ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomTextView
+                                android:id="@+id/tvPrayName4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:text="صــلاة  المغرب "
+                                android:textColor="@color/PRIMARY"
+                                android:textSize="@dimen/_15sdp"
+                                android:textStyle="bold" />
+
+                            <ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomTextView
+                                android:id="@+id/tvPrayNear4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:visibility="gone"
+                                android:text=" أقرب صلاة : العصر - تبقي 01:05"
+                                android:textSize="@dimen/_12sdp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/ivPraySound4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_10sdp"
+                            android:src="@drawable/ic_volume_up"
+                            android:tint="@color/PRIMARY2" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="2dp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    app:cardElevation="@dimen/_2sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:clickable="true"
+                        android:padding="@dimen/_5sdp">
+
+                        <ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomTextView
+                            android:id="@+id/tvPrayTime5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="06:25"
+                            android:textSize="@dimen/_15sdp"
+                            android:textColor="@color/PRIMARYDARK"
+                            android:textStyle="bold"/>
+                        <View
+                            android:layout_width="0.2dp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:layout_marginRight="@dimen/_15sdp"
+                            android:layout_marginLeft="@dimen/_15sdp"
+                            android:layout_height="match_parent"
+                            android:background="@color/BLUE_GRAY"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:orientation="vertical">
+
+                            <ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomTextView
+                                android:id="@+id/tvPrayName5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:text="صــلاة العشـاء "
+                                android:textColor="@color/PRIMARY"
+                                android:textSize="@dimen/_15sdp"
+                                android:textStyle="bold" />
+
+                            <ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomTextView
+                                android:id="@+id/tvPrayNear5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:visibility="gone"
+                                android:text=" أقرب صلاة : العصر - تبقي 01:05"
+                                android:textSize="@dimen/_12sdp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/ivPraySound5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_10sdp"
+                            android:src="@drawable/ic_volume_up"
+                            android:tint="@color/PRIMARY2" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
 
 
-        </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
     </LinearLayout>
 </LinearLayout>

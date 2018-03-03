@@ -16,7 +16,7 @@ import java.io.ByteArrayOutputStream;
 
 public class Utility {
 
-    public static boolean isServiceRunning(Context context, Class<?> serviceClass) {
+    public  boolean isServiceRunning(Context context, Class<?> serviceClass) {
         try {
             ActivityManager manager =
                     (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
@@ -45,7 +45,7 @@ public class Utility {
 //                image.getHeight(), false)));
     }
 
-    public boolean checkInternetConnection(Context context){
+    public boolean  checkInternetConnection(Context context){
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
     }

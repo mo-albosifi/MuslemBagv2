@@ -18,7 +18,7 @@ public interface LocationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void insert(LocationData... locationData);
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
+    @Update
     public void update(LocationData... locationData);
 
     @Delete

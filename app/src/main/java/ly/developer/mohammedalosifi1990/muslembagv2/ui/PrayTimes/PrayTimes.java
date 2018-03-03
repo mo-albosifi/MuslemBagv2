@@ -1,6 +1,7 @@
 package ly.developer.mohammedalosifi1990.muslembagv2.ui.PrayTimes;
 
 
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Handler;
@@ -9,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -16,6 +19,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,10 +29,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import ly.developer.mohammedalosifi1990.muslembagv2.Services.PrayService;
+import ly.developer.mohammedalosifi1990.muslembagv2.Services.PrayService_;
 import ly.developer.mohammedalosifi1990.muslembagv2.Utils.GPSTracker;
 import ly.developer.mohammedalosifi1990.muslembagv2.R;
 import ly.developer.mohammedalosifi1990.muslembagv2.Utils.PrayTime;
 import ly.developer.mohammedalosifi1990.muslembagv2.base.BaseFragment;
+import ly.developer.mohammedalosifi1990.muslembagv2.data.Dao.LocationDao;
 import ly.developer.mohammedalosifi1990.muslembagv2.data.enity.LocationData;
 import ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomButton;
 import ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomTextView;
@@ -46,7 +53,13 @@ public class PrayTimes extends BaseFragment {
     @ViewById
     CustomTextView tvDate, tvLocation, tvNotFound;
     @ViewById
-    LinearLayout llNotFound, llData;
+    CustomTextView tvPrayTime, tvPrayTime2, tvPrayTime3,tvPrayTime4,tvPrayTime5;
+    @ViewById
+    LinearLayout llNotFound;
+    @ViewById
+    ScrollView llPrayList;
+    @ViewById
+    ProgressBar pbLoad;
     @ViewById
     CustomButton btnGetLocation;
     @ViewById
@@ -57,22 +70,26 @@ public class PrayTimes extends BaseFragment {
     @AfterViews
     public void afterViews() {
 
+
         calendar = Calendar.getInstance();
         setDate();
-        showToast(getTimeZone()+"","e");
         LocationData locationData = dbContext.getLocationDao().getData();
         if (locationData != null) {
-            tvLocation.setVisibility(View.VISIBLE);
-            tvLocation.setText("البلد " + locationData.getContryName() + " - " + "المدينة " + locationData.getCityName());
+            if (locationData.getContryName()=="") {
+                tvLocation.setVisibility(View.GONE);
+            } else {
+                tvLocation.setVisibility(View.VISIBLE);
+                tvLocation.setText(locationData.getContryName() +" - "+ locationData.getCityName());
+            }
             calcPrayTimes();
             llNotFound.setVisibility(View.GONE);
+            llPrayList.setVisibility(View.GONE);
         } else {
             tvNotFound.setText("الرجــاء ضبط بيانات الموقع الخاصة بك ... ليتمكن التطبيق من تنبيهك في أوقات الصلاة");
             tvLocation.setText("الموقع : غير معروف");
             tvLocation.setVisibility(View.GONE);
-//            llPrayList.setVisibility(View.GONE);
+            llPrayList.setVisibility(View.GONE);
             llNotFound.setVisibility(View.VISIBLE);
-//            rvPrayList.setVisibility(View.GONE);
         }
     }
 
@@ -80,27 +97,38 @@ public class PrayTimes extends BaseFragment {
     public void ivLeft() {
         calendar.add(Calendar.DAY_OF_MONTH, -1);
         setDate();
+        if (llNotFound.getVisibility()==View.GONE){
+            calcPrayTimes();
+        }
     }
 
     @Click
     public void ivRight() {
         calendar.add(Calendar.DAY_OF_MONTH, 1);
         setDate();
+        if (llNotFound.getVisibility()==View.GONE){
+            calcPrayTimes();
+        }
     }
 
     private void setDate() {
         tvDate.setText(getDayName(calendar.get(Calendar.DAY_OF_WEEK)) + "   " +
                 calendar.get(Calendar.YEAR) + " - " +
-                (calendar.get(Calendar.MONTH)+1)
+                (calendar.get(Calendar.MONTH) + 1)
                 + " - " + calendar.get(Calendar.DAY_OF_MONTH));
     }
 
     @Click
     public void btnGetLocation() {
-        btnGetLocation.setVisibility(View.GONE);
-        avi.setVisibility(View.VISIBLE);
-        tvNotFound.setText("جاري الحصول علي بيانات الموقع الخاصة بكـ..");
-        getLocationData();
+        if (utility.checkInternetConnection(getContext())){
+            btnGetLocation.setVisibility(View.GONE);
+            avi.setVisibility(View.VISIBLE);
+            tvNotFound.setText("جاري الحصول علي بيانات الموقع الخاصة بكـ..");
+            getLocationData();
+        }else {
+            showToast("الرحاء الأتصال بالشبكة","e");
+        }
+
     }
 
 
@@ -108,98 +136,55 @@ public class PrayTimes extends BaseFragment {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                gps = new GPSTracker(getContext());
+                if (dbContext.getLocationDao().getData()!=null){
+                    calcPrayTimes();
+                }else {
 
-                if (gps.canGetLocation()) {
-
-                    latitude = gps.getLatitude();
-                    longitude = gps.getLongitude();
-
-
-                    showToast(""+latitude +"  --  "+longitude,"e");
-                    showToast(""+latitude +"  --  "+longitude,"e");
-
-                    Geocoder gcd = new Geocoder(getContext(), Locale.getDefault());
-                    List<Address> addresses = null;
-                    try {
-                        addresses = gcd.getFromLocation(latitude, longitude, 1);
-                        if (addresses.size() > 0) {
-
-                            dbContext.getLocationDao().deleteAll();
-                            String cityName = "";
-                            tvLocation.setText("البلد " + addresses.get(0).getCountryName() + " - ");
-                            if (!addresses.get(0).getFeatureName().toLowerCase().contains("unnamed")) {
-                                tvLocation.append(" - " + addresses.get(0).getFeatureName());
-                                cityName = addresses.get(0).getFeatureName();
-                            } else {
-                                cityName = "غير معروف";
-                                tvLocation.append("المدينة  " + cityName);
-                            }
-                            tvLocation.setVisibility(View.VISIBLE);
-                            llNotFound.setVisibility(View.GONE);
-//                            rvPrayList.setVisibility(View.VISIBLE);
-
-                            dbContext.getLocationDao().insert(new LocationData(latitude, longitude, addresses.get(0).getCountryName(), cityName));
-                            calcPrayTimes();
-                        } else {
-                            LocationData locationData = dbContext.getLocationDao().getData();
-                            if (locationData != null) {
-                                tvLocation.setText("" + locationData.getContryName() + " - " + "المدينة :" + locationData.getCityName());
-                                llNotFound.setVisibility(View.GONE);
-                                tvLocation.setVisibility(View.VISIBLE);
-//                                rvPrayList.setVisibility(View.VISIBLE);
-                                calcPrayTimes();
-                            } else {
-                                tvLocation.setVisibility(View.GONE);
-                                tvNotFound.setText("لم يمكن النطبيق من أيحاد بيانت الموقع الخاص بكـ ... الرجاء أعادة المحاولة ");
-                                llNotFound.setVisibility(View.VISIBLE);
-                                btnGetLocation.setVisibility(View.VISIBLE);
-                                avi.setVisibility(View.GONE);
-                            }
-                        }
-
-                    } catch (IOException e) {
-                        LocationData locationData = dbContext.getLocationDao().getData();
-                        if (locationData != null) {
-                            tvLocation.setText("" + locationData.getContryName() + " - " + "المدينة :" + locationData.getCityName());
-                            llNotFound.setVisibility(View.GONE);
-                            tvLocation.setVisibility(View.VISIBLE);
-//                                rvPrayList.setVisibility(View.VISIBLE);
-                            calcPrayTimes();
-                        } else {
-                            tvLocation.setVisibility(View.GONE);
-                            tvNotFound.setText("لم يمكن النطبيق من أيحاد بيانت الموقع الخاص بكـ ... الرجاء أعادة المحاولة ");
-                            llNotFound.setVisibility(View.VISIBLE);
-                            btnGetLocation.setVisibility(View.VISIBLE);
-                            avi.setVisibility(View.GONE);
-                        }
-                    }
-
-                } else {
-                    gps.showSettingsAlert();
                 }
             }
         }, 3000);
     }
 
     public void calcPrayTimes() {
+        if (!utility.isServiceRunning(getContext(), PrayService_.class))
+        {
+            getActivity().startService(new Intent(getContext(), PrayService_.class));
+        }
+
+        llPrayList.setVisibility(View.GONE);
+        llNotFound.setVisibility(View.GONE);
+        pbLoad.setVisibility(View.VISIBLE);
 
 
-        double timezone = getTimeZone();
-        // Test Prayer times here
-        PrayTime prayers = new PrayTime();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                double timezone = getTimeZone();
+                // Test Prayer times here
+                PrayTime prayers = new PrayTime();
 
-        prayers.setTimeFormat(prayers.Time12);
-        prayers.setCalcMethod(prayers.Jafari);
-        prayers.setAsrJuristic(prayers.Shafii);
-        prayers.setAdjustHighLats(prayers.AngleBased);
-        int[] offsets = {0, 0, 0, 0, 0, 0, 0}; // {Fajr,Sunrise,Dhuhr,Asr,Sunset,Maghrib,Isha}
-        prayers.tune(offsets);
+                prayers.setTimeFormat(prayers.Time12);
+                prayers.setCalcMethod(prayers.Jafari);
+                prayers.setAsrJuristic(prayers.Shafii);
+                prayers.setAdjustHighLats(prayers.AngleBased);
+                int[] offsets = {0, 0, 0, 0, 0, 0, 0}; // {Fajr,Sunrise,Dhuhr,Asr,Sunset,Maghrib,Isha}
+                prayers.tune(offsets);
 
 
-        ArrayList<String> prayerTimes = prayers.getPrayerTimes(calendar, latitude, longitude, timezone);
-        ArrayList<String> prayerNames = prayers.getTimeNames();
+                LocationData ld=dbContext.getLocationDao().getData();
+                ArrayList<String> prayerTimes = prayers.getPrayerTimes(calendar,ld.getLatitude() , ld.getLonitude(), timezone);
 
+                tvPrayTime.setText(prayerTimes.get(0).substring(0,5));
+                tvPrayTime2.setText(prayerTimes.get(2).substring(0,5));
+                tvPrayTime3.setText(prayerTimes.get(3).substring(0,5));
+                tvPrayTime4.setText(prayerTimes.get(5).substring(0,5));
+                tvPrayTime5.setText(prayerTimes.get(6).substring(0,5));
+
+
+                pbLoad.setVisibility(View.GONE);
+                llPrayList.setVisibility(View.VISIBLE);
+            }
+        },500);
     }
 
     public double getTimeZone() {
@@ -234,5 +219,96 @@ public class PrayTimes extends BaseFragment {
         }
         return dayName;
     }
+
+
+
+/*
+    public void run() {
+        gps = new GPSTracker(getContext());
+        String contryName = "";
+        String cityName = "";
+        if (gps.canGetLocation()) {
+
+            latitude = gps.getLatitude();
+            longitude = gps.getLongitude();
+
+            if (latitude != 0.0 && longitude != 0.0) {
+
+
+                Geocoder gcd = new Geocoder(getContext(), Locale.getDefault());
+                List<Address> addresses = null;
+                try {
+
+                    addresses = gcd.getFromLocation(latitude, longitude, 1);
+                    if (addresses.size() > 0) {
+
+                        contryName = addresses.get(0).getCountryName();
+                        cityName = "";
+                        tvLocation.setText("البلد " + contryName + " - ");
+                        if (!addresses.get(0).getFeatureName().toLowerCase().contains("unnamed")) {
+                            tvLocation.append(" - " + addresses.get(0).getFeatureName());
+                            cityName = addresses.get(0).getFeatureName();
+                        } else {
+                            cityName = "غير معروف";
+                            tvLocation.append("المدينة " + cityName);
+                        }
+                        tvLocation.setVisibility(View.VISIBLE);
+                        llNotFound.setVisibility(View.GONE);
+
+                    } else {
+
+                        LocationData locationData = dbContext.getLocationDao().getData();
+                        if (locationData != null) {
+                            tvLocation.setText("" + locationData.getContryName() + " - " + "المدينة :" + locationData.getCityName());
+                            llNotFound.setVisibility(View.GONE);
+                            tvLocation.setVisibility(View.VISIBLE);
+//
+                        } else {
+                            tvLocation.setVisibility(View.GONE);
+                        }
+                    }
+                } catch (IOException e) {
+                    LocationData locationData = dbContext.getLocationDao().getData();
+                    if (locationData != null) {
+
+                        if (locationData.getContryName().length()<=0){
+                            tvLocation.setVisibility(View.GONE);
+                        }else {
+                            tvLocation.setText("" + locationData.getContryName() + " - " + "المدينة :" + locationData.getCityName());
+                            tvLocation.setVisibility(View.VISIBLE);
+                        }
+                        llNotFound.setVisibility(View.GONE);
+                        calcPrayTimes();
+                    } else {
+                        tvLocation.setVisibility(View.GONE);
+                        tvNotFound.setText("لم يمكن النطبيق من أيحاد بيانت الموقع الخاص بكـ ... الرجاء أعادة المحاولة ");
+                        llNotFound.setVisibility(View.VISIBLE);
+                        btnGetLocation.setVisibility(View.VISIBLE);
+                        avi.setVisibility(View.GONE);
+                    }
+                }
+                dbContext.getLocationDao().deleteAll();
+                dbContext.getLocationDao().insert(new LocationData(latitude, longitude, (contryName.length()<=0)?"":"البلد :"+contryName, (cityName.length()<=0)?"":" - المدينه"+ cityName));
+                calcPrayTimes();
+
+
+            } else {
+                if (dbContext.getLocationDao().getData()!=null){
+                    calcPrayTimes();
+                }else {
+                    tvLocation.setVisibility(View.GONE);
+                    tvNotFound.setText("لم يمكن النطبيق من أيحاد بيانت الموقع الخاص بكـ ... الرجاء أعادة المحاولة ");
+                    llNotFound.setVisibility(View.VISIBLE);
+                    btnGetLocation.setVisibility(View.VISIBLE);
+                    avi.setVisibility(View.GONE);
+                }
+            }
+
+        } else {
+            gps.showSettingsAlert();
+        }
+    }
+}
+*/
 
 }

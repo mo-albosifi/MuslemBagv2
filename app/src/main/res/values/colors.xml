@@ -40,4 +40,8 @@
     <color name="GREEN_ENABLE_FALSE">#71ac73</color>
     <color name="RED_ENABLE_FALSE">#e9958f</color>
 
+    <color name="simpletooltip_background">@color/colorAccent</color>
+    <color name="simpletooltip_text">@color/WHITE</color>
+    <color name="simpletooltip_arrow">@color/colorAccent</color>
+
 </resources>
