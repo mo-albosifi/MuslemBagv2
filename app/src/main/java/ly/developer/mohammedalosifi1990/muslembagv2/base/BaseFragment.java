@@ -21,6 +21,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.UiThread;
+import org.greenrobot.eventbus.EventBus;
 
 import br.com.goncalves.pugnotification.notification.PugNotification;
 import ly.developer.mohammedalosifi1990.muslembagv2.Application.AppInstanse;

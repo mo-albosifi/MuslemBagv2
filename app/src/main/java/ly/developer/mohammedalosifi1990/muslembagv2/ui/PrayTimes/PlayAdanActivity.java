@@ -43,6 +43,13 @@ public class PlayAdanActivity extends BaseActivity {
 
         mp = MediaPlayer.create(this, R.raw.azan_alfajer);
 
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                mp.stop();
+                makeNotifation("sss","ssss",R.drawable.msjed,R.drawable.msjed,null);
+            }
+        });
 
         mp.start();
 

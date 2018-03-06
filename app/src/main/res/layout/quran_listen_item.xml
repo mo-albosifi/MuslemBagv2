@@ -9,6 +9,7 @@
 
 
         <LinearLayout
+            android:id="@+id/ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -24,6 +25,7 @@
 
 
             <ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomTextView
+               android:id="@+id/tvShekhName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right"
@@ -44,20 +46,37 @@
                 android:tint="@color/PRIMARYDARK"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_azkar"
+                android:src="@drawable/ic_pause"
+                android:visibility="gone"
+
+                android:padding="@dimen/_5sdp"
                 android:layout_margin="@dimen/_5sdp"/>
             <ImageView
                 android:tint="@color/PRIMARYDARK"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_azkar"
+                android:src="@drawable/ic_clear"
+                android:padding="@dimen/_5sdp"
+                android:visibility="gone"
+
+                android:layout_margin="@dimen/_5sdp"/>
+
+            <ImageView
+                android:tint="@color/PRIMARYDARK"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_play"
+                android:padding="@dimen/_5sdp"
+
                 android:layout_margin="@dimen/_5sdp"/>
             <ImageView
                 android:tint="@color/PRIMARYDARK"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_azkar"
-                android:layout_margin="@dimen/_5sdp"/>
+                android:src="@drawable/ic_file_download"
+                android:layout_margin="@dimen/_5sdp"
+                android:padding="@dimen/_5sdp"
+                />
 
         </LinearLayout>
 

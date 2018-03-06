@@ -84,7 +84,13 @@ public class FirstActivity extends BaseActivity {
     @Click
     public void llPrayTimes() {
         Intent in = new Intent(FirstActivity.this, MainActivity_.class);
-        in.putExtra("openType", "pray");
+        in.putExtra("openType", 1);
+        startActivity(in);
+    }
+    @Click
+    public void llQuranListin() {
+        Intent in = new Intent(FirstActivity.this, MainActivity_.class);
+        in.putExtra("openType", 2);
         startActivity(in);
     }
 

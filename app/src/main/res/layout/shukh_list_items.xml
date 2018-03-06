@@ -5,10 +5,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="5dp"
     app:cardElevation="@dimen/_2sdp"
-    android:background="@drawable/background_with_shadow">
+    android:background="@drawable/bg_with_press_events">
 
 
     <LinearLayout
+        android:id="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -32,6 +33,7 @@
            android:layout_marginRight="@dimen/_5sdp"
            android:layout_marginLeft="@dimen/_5sdp">
            <ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomTextView
+               android:id="@+id/tvShekhName"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
 
@@ -40,6 +42,7 @@
                android:textSize="@dimen/_15sdp"
                android:textStyle="bold" />
            <ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomTextView
+               android:id="@+id/tvShekhName2"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_2sdp"

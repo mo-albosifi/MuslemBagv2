@@ -9,6 +9,11 @@
     tools:context="ly.developer.mohammedalosifi1990.muslembagv2.ui.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
+
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fl"></FrameLayout>
     <fragment
         android:id="@+id/fragPray"
         android:layout_width="match_parent"
@@ -20,15 +25,6 @@
         android:id="@+id/fragQuranListen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="ly.developer.mohammedalosifi1990.muslembagv2.ui.PrayTimes.PrayTimes_"
+        android:name="ly.developer.mohammedalosifi1990.muslembagv2.ui.QuranListen.QuranListenFragment_"
         />
-    <ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomTextView
-    android:visibility="gone"
-        android:id="@+id/tvAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:text="متسنمتمنستميتني تسيمنبت مسيتبم"
-       />
-
 </LinearLayout>

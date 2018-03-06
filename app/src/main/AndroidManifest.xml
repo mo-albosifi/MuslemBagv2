@@ -22,7 +22,6 @@
             android:theme="@style/AppTheme.NoActionBar"/>
 
 
-
         <activity
             android:name=".ui.FirstView.FirstActivity_"
             android:label="@string/title_activity_first"

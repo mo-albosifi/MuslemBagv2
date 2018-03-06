@@ -159,6 +159,7 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
+                            android:id="@+id/llQuranListin"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
