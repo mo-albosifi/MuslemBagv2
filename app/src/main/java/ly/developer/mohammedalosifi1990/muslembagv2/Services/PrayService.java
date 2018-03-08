@@ -73,7 +73,10 @@ public class PrayService extends Service {
                 addresses = gcd.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                 if (addresses.size() > 0) {
 
+
+
                     countryName = addresses.get(0).getCountryName();
+                    toast(countryName);
 
                     if (!addresses.get(0).getFeatureName().toLowerCase().contains("unnamed")) {
                         cityName = addresses.get(0).getFeatureName();
