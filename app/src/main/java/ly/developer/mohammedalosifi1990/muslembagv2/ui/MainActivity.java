@@ -49,9 +49,6 @@ public class MainActivity extends BaseActivity
     protected void afterView() {
         setSupportActionBar(toolbar);
 
-        showToast(getIntent().getExtras().getString("openType"),"e");
-        showToast(getIntent().getExtras().getString("openType"),"e");
-        showToast(getIntent().getExtras().getString("openType"),"e");
         if (getIntent().getExtras().getInt("openType")==1) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fl, new PrayTimes_()).commit();;
         }else if (getIntent().getExtras().getInt("openType")==2) {

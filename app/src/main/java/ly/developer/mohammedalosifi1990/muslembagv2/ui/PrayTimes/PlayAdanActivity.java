@@ -47,7 +47,6 @@ public class PlayAdanActivity extends BaseActivity {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
                 mp.stop();
-                makeNotifation("sss","ssss",R.drawable.msjed,R.drawable.msjed,null);
             }
         });
 

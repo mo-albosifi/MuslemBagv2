@@ -73,18 +73,17 @@ public class PrayService extends Service {
                 addresses = gcd.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                 if (addresses.size() > 0) {
 
-
-
                     countryName = addresses.get(0).getCountryName();
-                    toast(countryName);
 
-                    if (!addresses.get(0).getFeatureName().toLowerCase().contains("unnamed")) {
-                        cityName = addresses.get(0).getFeatureName();
+                    if (!addresses.get(0).getLocality().toLowerCase().contains("unnamed")) {
+                        cityName = addresses.get(0).getLocality();
                     } else {
                         cityName = "غير معروف";
                     }
 
+                    toast("cityName   =   "+cityName);
 
+                    dbContext.getLocationDao().deleteAll();
                 }
 
                 if (dbContext.getLocationDao().getData() == null) {
@@ -214,7 +213,9 @@ public class PrayService extends Service {
                             dbContext.getPrayAAzanDao().deleteAll();
                             dbContext.getPrayAAzanDao().insert(new PrayForPlayAzan(prayerName.get(i),prayerTimes.get(i)));
 
-                            startActivity(new Intent(this, PlayAdanActivity_.class));
+                            Intent myIntent=new Intent(this, PlayAdanActivity_.class);
+                            myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            this.startActivity(myIntent);
                             makeNotifation(prayerName.get(i), prayerTimes.get(i));
                         }
                     }

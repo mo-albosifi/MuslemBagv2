@@ -46,7 +46,6 @@ import ly.developer.mohammedalosifi1990.muslembagv2.wedgit.CustomTextView;
 @EFragment(R.layout.fragment_pray_times)
 public class PrayTimes extends BaseFragment {
 
-    GPSTracker gps;
     Calendar calendar;
     PrayTime prayers;
     ArrayList<String> prayerTimes;
